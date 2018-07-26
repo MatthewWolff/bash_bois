@@ -32,8 +32,6 @@ settheme() # ohmyzsh only
 }
 
 ```
-
-
 ### Aliases 
 ```bash
 alias daddy='sudo'  # nice
@@ -51,12 +49,32 @@ alias rc='vim ~/.zshrc'
 alias shrink='export PS1="\u > "' # use when `pwd` is too long
 
 ```
+## Environment Parameters for Writing Scripts
+```bash
+first_param=$1
+second_param=$2  # and so forth
+num_of_params=$#
+all_parameters_passed_in_together=$* # like "arg1 arg2 arg3"
+all_parameters_passed_in_separate=$@ # example below
+$@='prod
+test
+dev'
+# this is useful if you want to feed params into a for-loop
+
+PID_of_parent_shell=$$
+argument_of_prev_command=$_ 
+exit_status_of_last_command=$?
+PID_of_last_command=$! # example below, where i start a timer in the background + store its pid
+start_timer & timer_pid=$!
+# this is useful for starting a timer to activate a kill-switch in a program
+```
 
 ## Some other favorites
 These primarily help to navigate bash commands faster by reducing typing redundancy.
 
 ### Reuse last command
-Simply typing `!!` will reexecute the most recently used command. This is particularly useful if you forgot to use `sudo`.
+Simply typing `!!` will reexecute the most recently used command. This is particularly useful if you forgot to use `sudo`.  
+You can also hit the up-key.
 
 ### Reuse specific arguments from last command
 Suppose you want to quickly `cat` a file to see its output, or you copy a file to another directory with `cp <file> <otherDir/file>`. Immediately after seeing its contents or copying it over, you want to edit the file with your favorite text editor. 
@@ -83,3 +101,19 @@ If the command you want to pull from was executed more than 1 command ago, and y
 ### Overall generic syntax
 `!-N:X-Y` will retrieve a range of arguments between X and Y (0 based and inclusive) from the command used N executions ago. 
 
+### Navigating Directories
+```bash
+cd - # Changes into the directory you were in previously
+cd -2 # zsh exclusive, jumps to the directory you were in 2 cd's ago
+
+pushd  /dir # pushes cwd onto stack and cd's into /dir
+popd # pops head of stack and cds into new head
+dirs # view stack
+
+## Example ##
+# Starting from $HOME
+pushd /home/other_user # stack is now /home/other_user, $HOME, cwd is /home/other_user
+popd # stack is no $HOME and cwd is $HOME
+# One pushd and popd is equivalent to cd -
+# You can make the stack as large as you want, so pushd popd is more powerful 
+```
