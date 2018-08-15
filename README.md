@@ -117,3 +117,19 @@ popd # stack is no $HOME and cwd is $HOME
 # One pushd and popd is equivalent to cd -
 # You can make the stack as large as you want, so pushd popd is more powerful 
 ```
+
+### Killing hard-to-kill processes
+Suppose you run a pesky process that won't let you send `SIGINT` to end it. For example:
+
+```bash
+for f in `grep -rl * -e ":"`; do more $f; done
+```
+This command is great, **when used properly**. The `grep -rl * -e ":"` will return a list of filenames that can be reached recursively from the current directory, where the files include a certain pattern (in this case the colon ":" character). The for loop portion of the command will iterate through all of the files and execute the `more` binary executable. 
+
+However, if you're like me, and you accidentally ran the command from the wrong directory.. you might be stuck traversing  **a ton** of files.. and good 'ole `CTRL-C` isn't helping. You could close your window and lose your shell session... or you can use this nice trick:
+
+```bash
+CTRL-Z
+kill %%
+```
+`CTRL-Z` will **suspend** the currently running process. `%%` will select **the most recently suspended process**. Nifty huh?
