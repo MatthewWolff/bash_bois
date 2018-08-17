@@ -144,4 +144,6 @@ Turns out, there's an easy way to do this in one line! It looks like this:
 ```bash
 mkdir <dirname> && cd $_
 ```
-The special `$_` variable, in bash, is a reference to the last argument of the most recently executed command (in this case, `<dirname>`). There are probably several other handy ways to use this, so if you stumble upon any, please submit a pull request or a new issue to this repo to let us know! 
+The special `$_` variable, in bash, is a reference to the last argument of the most recently executed command (in this case, `<dirname>`). **NOTE:** this is *different* than `!$`, which refers to the last argument of the previous command **in the shell history.**
+
+There are probably several other handy ways to use this, so if you stumble upon any, please submit a pull request or a new issue to this repo to let us know! 
