@@ -133,3 +133,15 @@ CTRL-Z
 kill %%
 ```
 `CTRL-Z` will **suspend** the currently running process. `%%` will select **the most recently suspended process**. Nifty huh?
+
+### Quickly Create a Directory and Move To It
+This is something we do all the time: 
+```bash
+mkdir <dirname>
+cd <dirname>
+```
+Turns out, there's an easy way to do this in one line! It looks like this:
+```bash
+mkdir <dirname> && cd $_
+```
+The special `$_` variable, in bash, is a reference to the last argument of the most recently executed command (in this case, `<dirname>`). There are probably several other handy ways to use this, so if you stumble upon any, please submit a pull request or a new issue to this repo to let us know! 
